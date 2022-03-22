@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+
+
+{% if (session['result']) == 'Please enter a non-empty input' %}
+  .result_title{
+    background-color:#e4de46;
+    display: inline-block;
+  }
+{% elif (session['result'].lower()) == 'real' %}
+  .result_title{
+    background-color:#339933;
+    display: inline-block;
+  }
+{% else %}
+  .result_title{
+    background-color:#ed4d4d;
+    display: inline-block;
+  }
+{% endif %}
+
+
+
+
+.container-fluid{
+  text-align:center;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+.result_title{
+    padding: 0px 5px 5px 5px;
+    font-size: 48px;
+    color: white;
+}
+.models{
+    margin-top: 30px;
+    padding: 10px 0px 0px 0px;
+    font-size: 24px;
+    font-weight:bold;
+}
+p{
+  -webkit-margin-before:0;
+  -webkit-margin-after:0;
+}
+
+.result_prob{
+  text-align: center;
+}
+
+.result_prob p{
+  display: inline-block;
+  vertical-align: middle;
+  text-align: left;
+}
+.result_prob p span{
+  display:block;
+  font-size: 22px;
+}
+
+button{
+  height:40px;
+  lineheight: 40px;
+  margin-top: 40px;
+  margin-left: -20px
+}
+
+
+
+</style>
+
+<div class="container-fluid">
+  <!--Because we're using the imported session, do not need to pass it in-->
+    <div class="result_title">
+      <p class='result_title'>
+        {% if (session['result'].lower()) == 'real' %}
+          <span>&#10003;</span> Your article appears to be real.
+        {% elif (session['result']) == 'Please enter a non-empty input' %}
+          :( Please enter a non-empty input!
+        {% else %}
+          <span>&cross;</span> It appears your article is fake!
+        {% endif %}
+      </p>
+    </div>
+
+  <p class="models">
+      {% if session['model_choice'] == 'naive_model_choice' %}
+        Naive Bayes Model
+      {% else %}
+        Recurrent Neural Networks model
+      {% endif %}
+  </p>
+  <!--<li>Model: {{session['model_choice']}}</li>-->
+  <!-- <li>Input Article: {{session['input_article']}}</li> -->
+  <!--<li>Result: {{session['result']}}</li>-->
+
+  <div class="result_prob">
+    <p>
+      {% if session['result_prob_real'] != 'Null' %}
+          <span>Real probability: {{session['result_prob_real']}}</span>
+      {% endif %}
+
+
+      {% if session['result_prob_fake'] != 'Null' %}
+          <span>Fake probability: {{session['result_prob_fake']}}</span>
+      {% endif %}
+    </p>
+  </div>
+
+  <!--<li>Real probability: {{session['result_prob_real']}}</li>-->
+  <!--<li>Fake probability: {{session['result_prob_fake']}}</li>-->
+
+  <a href="{{url_for('index')}}"><button type="button" class="btn btn-primary">Classify another article</button></a>
+</div>
+{% endblock %}

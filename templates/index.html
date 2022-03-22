@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="container">
+      <h1 class="title">Real or Fake News Classifier</h1>
+
+      <!--Don't need action or class since we're using WTForms-->
+      <!--Remember, if you want to use your own CSS classes put (class='css_class') after form.attribute-->
+      <form method="post">
+        {{ form.hidden_tag() }}
+
+        <div class="inputs">
+          {{form.model_choice.label}}{{form.model_choice}}
+          <!--<br>-->
+          <p class="input_label">Please enter article:</p>
+          <!--<br>-->
+          {{form.input_article(class='form-control')}}
+          <!--<br>-->
+        </div>
+
+        <div class="buttons">
+          <input class="btn btn-secondary" name="reset" type="reset" value="Reset"/>
+          {{form.submit(class='btn btn-primary')}}
+        </div>
+
+      </form>
+    </div>
+{% endblock %}
